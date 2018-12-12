@@ -4,7 +4,9 @@
 package Entity.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -33,11 +36,11 @@ public class Education {
     @Basic
     private int points;
 
-    @ManyToMany
-    private List<Course> courses;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Set<Course> courses;
     
     @OneToMany(mappedBy ="education", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<Student> students;
+    private Set<Student> students;
 
     public Education() {
     }
@@ -74,14 +77,14 @@ public class Education {
         this.points = points;
     }
 
-    public List<Student> getStudents() {
+    public Set<Student> getStudents() {
         if (students == null) {
-            students = new ArrayList<>();
+            students = new HashSet<>();
         }
         return this.students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(Set<Student> students) {
         this.students = students;
     }
     
@@ -97,14 +100,14 @@ public class Education {
     
     
 
-    public List<Course> getCourses() {
+    public Set<Course> getCourses() {
         if (courses == null) {
-            courses = new ArrayList<>();
+            courses = new HashSet<>();
         }
         return this.courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
     
