@@ -3,8 +3,9 @@
  */
 package Entity.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,8 +41,8 @@ public class Course {
     @JoinColumn(nullable = true)
     private Teacher teacher;
 
-    @ManyToMany(mappedBy = "courses", cascade = CascadeType.PERSIST)
-    private List<Education> educations;
+    @ManyToMany
+    private Set<Education> educations;
 
     public Course() {
     }
@@ -87,14 +88,14 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public List<Education> getEducations() {
+    public Set<Education> getEducations() {
         if (educations == null) {
-            educations = new ArrayList<>();
+            educations = new HashSet<>();
         }
         return this.educations;
     }
 
-    public void setEducations(List<Education> educations) {
+    public void setEducations(Set<Education> educations) {
         this.educations = educations;
     }
 
