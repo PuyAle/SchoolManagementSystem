@@ -3,8 +3,9 @@
  */
 package Entity.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,8 +22,8 @@ public class Teacher extends Person {
     @Basic
     private int Salary;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private List<Course> courses;
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private Set<Course> courses;
 
     public Teacher() {
     }
@@ -43,14 +44,14 @@ public class Teacher extends Person {
         this.Salary = Salary;
     }
 
-    public List<Course> getCourses() {
+    public Set<Course> getCourses() {
         if (courses == null) {
-            courses = new ArrayList<>();
+            courses = new HashSet<>();
         }
         return this.courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
 
