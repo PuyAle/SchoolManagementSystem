@@ -3,7 +3,6 @@
  */
 package Entity.domain;
 
-
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -26,13 +25,12 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column (name = "course_id")    
+    @Column(name = "course_id")
     private Long courseId;
 
     @Basic
     private String name;
-    
-   
+
     @Column(nullable = false)
     @Basic
     private int points;
@@ -47,14 +45,11 @@ public class Course {
     public Course() {
     }
 
-
     public Course(String name, int points) {
         this.name = name;
         this.points = points;
-        
+
     }
-    
-    
 
     public Long getCourseId() {
         return this.courseId;
@@ -105,6 +100,11 @@ public class Course {
 
     public void removeEducation(Education education) {
         getEducations().remove(education);
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" + "courseId=" + courseId + ", name=" + name + ", points=" + points;
     }
 
 }

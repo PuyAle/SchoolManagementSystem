@@ -10,13 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-
-//@NamedQueries({
-////    Behövs ej då vi sätter värdena direkt i klassen. 
-//    @NamedQuery(name = "findStudent", query = "select Student s  WHERE s.personId = :personId"),
-//    @NamedQuery (name = "getStudentByName", query = ("Select s FROM Student s where s.firstName =:firstName")),
-//    //@NamedQuery (name = "removeStudent", query = ("")
-//}) 
+@NamedQueries({
+    @NamedQuery(name = "findStudent", query = "select Student s  WHERE s.personId = :personId")
+    ,@NamedQuery(name = "getStudentByName", query = ("Select s FROM Student s where s.firstName =:firstName"))
+})
 @Entity
 public class Student extends Person {
 
@@ -28,15 +25,12 @@ public class Student extends Person {
 
     public Student() {
     }
-    
-    
-    public Student(Long personId, String firstName, String lastName, Gender gender, int points) {
-        super(personId, firstName, lastName, gender);
-        this.points = points;
-        
-    }
 
-   
+    public Student(Long personId, String firstName, String lastName, Gender gender) {
+        super(personId, firstName, lastName, gender);
+        points = 0;
+
+    }
 
     public int getPoints() {
         return this.points;
@@ -52,6 +46,11 @@ public class Student extends Person {
 
     public void setEducation(Education education) {
         this.education = education;
+    }
+
+    @Override
+    public String toString() {
+        return "Student" + super.toString() + "points=" + points + ", education=" + education;
     }
 
 }

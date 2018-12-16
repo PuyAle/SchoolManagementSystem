@@ -12,11 +12,11 @@ import javax.persistence.Persistence;
 import javax.persistence.*;
 
 public class DAOStudentImpl implements DAOStudent {
- 
+
     public static EntityManagerFactory emf;
-    
+
     public DAOStudentImpl() {
-    emf = Persistence.createEntityManagerFactory("PU");
+        emf = Persistence.createEntityManagerFactory("PU");
 
     }
 
@@ -25,14 +25,14 @@ public class DAOStudentImpl implements DAOStudent {
     }
 
     @Override
-    public boolean createStudent(Long personId, String firstName, String lastName, Gender gender, int points, Education education) {
+    public boolean createStudent(Long personId, String firstName, String lastName, Gender gender) {
 
         EntityManager em = null;
 
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Student s = new Student(personId, firstName, lastName, gender, points);
+            Student s = new Student(personId, firstName, lastName, gender);
             em.persist(s);
             em.getTransaction().commit();
 
@@ -50,25 +50,20 @@ public class DAOStudentImpl implements DAOStudent {
         }
     }
 
-    //Create a method that accepts the student to change course from the list in educationclass. 
-    //The points from the old course should be added to the students total points. 
-    //Create a variable in the student class that has the acctual course set in it, so after the changeCourse method is called 
-    // it shoulde change the course variable and get the old points from that course.
     @Override
-    public boolean updateStudentPoints(Long personId, int addPoints) {
+    public void updateStudentEducation(long personId, long educationId) {
         EntityManager em = null;
+
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Student s = em.getReference(Student.class, personId);
-            int newPoints = s.getPoints() + addPoints;
-            s.setPoints(newPoints);
+            Education e = em.getReference(Education.class, educationId);
+            e.addStudent(s);
             em.getTransaction().commit();
-
-            return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("The person doesn't exist in the system.");
-            return false;
+
         } finally {
             if (em != null) {
                 em.close();
@@ -77,38 +72,65 @@ public class DAOStudentImpl implements DAOStudent {
 
     }
 
-    @Override
-    public boolean updateStudentEducation(Long personId, Education newEducation) {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Student s = em.getReference(Student.class, personId);
-            s.setEducation(newEducation);
-            em.getTransaction().commit();
-
-            return true;
-        } catch (EntityNotFoundException ex) {
-            System.out.println("The person doesn't exist in the system.");
-            return false;
-        } //catch (exception handling commit issues  rollback??)
-        finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
+    //Create a method that accepts the student to change course from the list in educationclass.
+    //The points from the old course should be added to the students total points.
+    //Create a variable in the student class that has the acctual course set in it, so after the changeCourse method is called
+    // it shoulde change the course variable and get the old points from that course.
+    //@Override
+//    public boolean updateStudentPoints(Long personId) {
+//        EntityManager em = null;
+//        try {
+//            em = getEntityManager();
+//            em.getTransaction().begin();
+//            Student s = em.getReference(Student.class, personId);
+//            Education e = s.getEducation();
+//            e.
+//            int newPoints = s.getPoints() +;
+//            s.setPoints(newPoints);
+//            em.getTransaction().commit();
+//
+//            return true;
+//        } catch (EntityNotFoundException ex) {
+//            System.out.println("The person doesn't exist in the system.");
+//            return false;
+//        } finally {
+//            if (em != null) {
+//                em.close();
+//            }
+//        }
+//
+//    }
+//    @Override
+//    public boolean updateStudentEducation(Long personId, Education newEducation) {
+//        EntityManager em = null;
+//        try {
+//            em = getEntityManager();
+//            em.getTransaction().begin();
+//            Student s = em.getReference(Student.class, personId);
+//            s.setEducation(newEducation);
+//            em.getTransaction().commit();
+//
+//            return true;
+//        } catch (EntityNotFoundException ex) {
+//            System.out.println("The person doesn't exist in the system.");
+//            return false;
+//        } //catch (exception handling commit issues  rollback??)
+//        finally {
+//            if (em != null) {
+//                em.close();
+//            }
+//        }
+//    }
     @Override
     public List<Student> getStudent(Long personId) {
 
         EntityManager em = emf.createEntityManager();
         try {
+
             TypedQuery<Student> q = em.createNamedQuery("findStudent", Student.class);
 
             q.setParameter("personId", personId);
             List<Student> list = q.getResultList();
-            //Student s = em.find(Student.class, personId); om jag ska returnera en student enbart, nu returneras en lista ist för att passa printmetoden. 
 
             return list;
         } finally {
@@ -122,7 +144,7 @@ public class DAOStudentImpl implements DAOStudent {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<Student> q = em.createNamedQuery("getStudentByName", Student.class);
-            List<Student> list = q.setParameter("firstName", "%" + firstName + "%").getResultList();
+            List<Student> list = q.setParameter("firstName", firstName + "%").getResultList();
             return list;
         } finally {
             em.close();

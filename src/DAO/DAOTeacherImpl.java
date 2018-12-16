@@ -1,33 +1,34 @@
-
 package DAO;
 
 import Entity.domain.Course;
+import Entity.domain.Education;
 import Entity.domain.Gender;
 import Entity.domain.Student;
 import Entity.domain.Teacher;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
+public class DAOTeacherImpl implements DAOTeacher {
 
-public class DAOTeacherImpl implements DAOTeacher{
-public static EntityManagerFactory emf;
+    public static EntityManagerFactory emf;
+
     public DAOTeacherImpl() {
         emf = Persistence.createEntityManagerFactory("PU");
     }
-    
-    public static EntityManager getEntityManager(){
+
+    public static EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    
-    
     @Override
     public boolean createTeacher(Long personId, String firstName, String lastName, Gender gender, int salary) {
-          EntityManager em = null;
+        EntityManager em = null;
 
         try {
             em = getEntityManager();
@@ -51,28 +52,97 @@ public static EntityManagerFactory emf;
     }
 
     @Override
-    public boolean updateTeacherSalary(Long personId, int newSalary) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateTeacherSalary(Long personId, int newSalary) {
+        EntityManager em = null;
+
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Teacher t = em.getReference(Teacher.class, personId);
+            t.setSalary(newSalary);
+            em.getTransaction().commit();
+        } catch (EntityNotFoundException ex) {
+            System.out.println("The person doesn't exist in the system.");
+
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
-    public boolean updateTeacherCourse(Long personId, Course newCourse) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateTeacherCourse(Long personId, long courseId) {
+        EntityManager em = null;
+
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Teacher t = em.getReference(Teacher.class, personId);
+            Course c = em.getReference(Course.class, courseId);
+            c.setTeacher(t);
+            em.getTransaction().commit();
+        } catch (EntityNotFoundException ex) {
+            System.out.println("The person doesn't exist in the system.");
+
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     @Override
-    public List<Student> getTeacher(Long personId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Teacher> getTeacher(Long personId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+
+            TypedQuery<Teacher> q = em.createNamedQuery("findTeacher", Teacher.class);
+
+            q.setParameter("personId", personId);
+            List<Teacher> list = q.getResultList();
+
+            return list;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
-    public List<Student> getTeacherByName(String firstName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Teacher> getTeacherByName(String firstName) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Teacher> q = em.createNamedQuery("getTeacherByName", Teacher.class);
+            List<Teacher> list = q.setParameter("firstName", firstName + "%").getResultList();
+            return list;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
-    public boolean removeTeacher(Long personId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removeTeacher(Long personId) {
+        EntityManager em = null;
+
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Teacher t = em.getReference(Teacher.class, personId);
+            Set<Course> courses = t.getCourses();
+            for (Course course : courses) {
+                t.setCourses(null);
+            }
+            em.remove(t);
+            em.getTransaction().commit();
+        } catch (EntityNotFoundException ex) {
+            System.out.println("The person doesn't exist in the system. ");
+
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+
     }
 
 }

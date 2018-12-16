@@ -3,19 +3,21 @@
  */
 package Entity.domain;
 
-
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import javax.persistence.OneToMany;
 
-/**
- * @author puyaa
- */
+@NamedQueries({
+    @NamedQuery(name = "findTeacher", query = "select Teacher t  WHERE t.personId = :personId")
+    ,@NamedQuery(name = "getTeacherByName", query = ("Select t FROM Teacher t where t.firstName =:firstName"))
+})
 @Entity
 public class Teacher extends Person {
 
@@ -27,14 +29,12 @@ public class Teacher extends Person {
 
     public Teacher() {
     }
-    
+
     public Teacher(Long personId, String firstName, String lastName, Gender gender, int Salary) {
         super(personId, firstName, lastName, gender);
         this.Salary = Salary;
- 
+
     }
-    
-    
 
     public int getSalary() {
         return this.Salary;

@@ -26,7 +26,7 @@ import javax.persistence.OneToMany;
 public class Education {
 
     @Id
-    @Column (name = "education_id")
+    @Column(name = "education_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long educationId;
 
@@ -38,20 +38,18 @@ public class Education {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Course> courses;
-    
-    @OneToMany(mappedBy ="education", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "education", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Set<Student> students;
 
     public Education() {
     }
-    
+
     public Education(String name, int points) {
         this.name = name;
         this.points = points;
-        
+
     }
-    
-    
 
     public Long getEducationId() {
         return this.educationId;
@@ -87,7 +85,7 @@ public class Education {
     public void setStudents(Set<Student> students) {
         this.students = students;
     }
-    
+
     public void addStudent(Student student) {
         getStudents().add(student);
         student.setEducation(this);
@@ -97,8 +95,6 @@ public class Education {
         getStudents().remove(student);
         student.setEducation(null);
     }
-    
-    
 
     public Set<Course> getCourses() {
         if (courses == null) {
@@ -110,7 +106,7 @@ public class Education {
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
-    
+
     public void addCourse(Course course) {
         getCourses().add(course);
         course.getEducations().add(this);
@@ -119,6 +115,11 @@ public class Education {
     public void removeCourse(Course course) {
         getCourses().remove(course);
         course.getEducations().remove(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Education{" + "educationId=" + educationId + ", name=" + name + ", points=" + points + '}';
     }
 
 }

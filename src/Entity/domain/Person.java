@@ -19,7 +19,6 @@ import javax.persistence.InheritanceType;
 /**
  * @author puyaa
  */
-
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(length = 31)
@@ -27,7 +26,7 @@ public abstract class Person {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name ="person_id")
+    @Column(name = "person_id")
     private Long personId;
 
     @Basic
@@ -45,7 +44,7 @@ public abstract class Person {
     @Basic
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    
+
     public Person() {
     }
 
@@ -53,13 +52,9 @@ public abstract class Person {
         this.personId = personId;
         this.firstName = firstName;
         this.lastName = lastName;
-        
+
         this.gender = gender;
     }
-
-    
-    
-    
 
     public Long getPersonId() {
         return this.personId;
@@ -99,6 +94,11 @@ public abstract class Person {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return " personId=" + personId + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + '}';
     }
 
 }
