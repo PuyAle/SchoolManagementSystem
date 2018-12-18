@@ -27,7 +27,7 @@ public class DAOTeacherImpl implements DAOTeacher {
     }
 
     @Override
-    public boolean createTeacher(Long personId, String firstName, String lastName, Gender gender, int salary) {
+    public Teacher createTeacher(Long personId, String firstName, String lastName, Gender gender, int salary) {
         EntityManager em = null;
 
         try {
@@ -37,11 +37,11 @@ public class DAOTeacherImpl implements DAOTeacher {
             em.persist(t);
             em.getTransaction().commit();
 
-            return true;
+            return t;
 
         } catch (EntityExistsException ex) {
             System.err.println("The person does already exist in the system.");
-            return false;
+            return null;
 
             //catch (exception that handles commit problem?)
         } finally {
@@ -93,16 +93,14 @@ public class DAOTeacherImpl implements DAOTeacher {
     }
 
     @Override
-    public List<Teacher> getTeacher(Long personId) {
-        EntityManager em = emf.createEntityManager();
+    public Teacher getTeacher(Long personId) {
+        EntityManager em = getEntityManager();
         try {
-
-            TypedQuery<Teacher> q = em.createNamedQuery("findTeacher", Teacher.class);
-
-            q.setParameter("personId", personId);
-            List<Teacher> list = q.getResultList();
-
-            return list;
+            Teacher t = em.find(Teacher.class, personId);
+            return t;
+        } catch (EntityNotFoundException e) {
+            System.out.println(e);
+            return null;
         } finally {
             em.close();
         }
@@ -121,6 +119,18 @@ public class DAOTeacherImpl implements DAOTeacher {
     }
 
     @Override
+    public List<Teacher> getAllTeachers() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Teacher> q = em.createNamedQuery("getAllTeachers", Teacher.class);
+            List<Teacher> list = q.getResultList();
+            return list;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
     public void removeTeacher(Long personId) {
         EntityManager em = null;
 
@@ -130,7 +140,7 @@ public class DAOTeacherImpl implements DAOTeacher {
             Teacher t = em.getReference(Teacher.class, personId);
             Set<Course> courses = t.getCourses();
             for (Course course : courses) {
-                t.setCourses(null);
+                course.setTeacher(null);
             }
             em.remove(t);
             em.getTransaction().commit();

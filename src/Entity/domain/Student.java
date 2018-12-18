@@ -6,13 +6,14 @@ package Entity.domain;
 import java.time.LocalDate;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @NamedQueries({
-    @NamedQuery(name = "findStudent", query = "select Student s  WHERE s.personId = :personId")
-    ,@NamedQuery(name = "getStudentByName", query = ("Select s FROM Student s where s.firstName =:firstName"))
+    @NamedQuery(name = "getAllStudents", query = ("SELECT s FROM Student s"))
+    ,@NamedQuery(name = "getStudentByName", query = ("Select s FROM Student s where s.firstName LIKE :firstName"))
 })
 @Entity
 public class Student extends Person {
@@ -20,7 +21,7 @@ public class Student extends Person {
     @Basic
     private int points;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Education education;
 
     public Student() {

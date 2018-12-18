@@ -38,10 +38,6 @@ public abstract class Person {
     private String lastName;
 
     @Basic
-    @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
-
-    @Basic
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -80,14 +76,6 @@ public abstract class Person {
         this.lastName = lastName;
     }
 
-    public LocalDate getDateOfBirth() {
-        return this.dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public Gender getGender() {
         return this.gender;
     }
@@ -98,7 +86,7 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return " personId=" + personId + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + '}';
+        return " personId=" + personId + ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender + '}';
     }
 
 }

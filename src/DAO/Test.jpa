@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" ppkg="Entity" epkg=".domain" v="4.9" rws="_1545049393677114" cws="_1545049393677114" persistenceUnitName="DEFAULT_PU" sm="false" xs="false" id="_154504939340890" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+    <jpa:entity compositePrimaryKeyClass="PersonPK" abs="true" class="Person" v="true" xre="false" m="false" rootElement="_154504939340890" id="_154504939346091">
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="firstName" ft="false" id="_154504939346193">
+                <jpa:column name="first_name" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="lastName" ft="false" id="_154504939346194">
+                <jpa:column name="last_name" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="java.time.LocalDate" v="true" name="dateOfBirth" ft="false" id="_154504939346195">
+                <jpa:column name="date_of_birth" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="Entity.domain.Gender" v="true" name="gender" ft="false" id="_154504939346196">
+                <jpa:enumerated>STRING</jpa:enumerated>
+            </jpa:basic>
+            <jpa:id attribute-type="Long" v="true" name="personId" ft="false" id="_154504939346192">
+                <jpa:column name="person_id" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:inheritance strategy="SINGLE_TABLE"/>
+        <jpa:discriminator-column length="31"/>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="TeacherPK" abs="false" class="Teacher" superclassId="_154504939346091" v="true" xre="false" m="false" rootElement="_154504939340890" id="_154504939347797">
+        <jpa:attributes>
+            <jpa:one-to-many own="false" collection-type="java.util.Set" connected-entity-id="_1545049393560102" connected-attribute-id="_1545049393560106" fetch="LAZY" v="true" name="courses" ft="false" id="_154504939347798">
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                </jpa:cascade>
+            </jpa:one-to-many>
+        </jpa:attributes>
+        <jpa:nq e="true" name="findTeacher">
+            <jpa:query>select t FROM Teacher t  WHERE t.personId = :personId</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="getTeacherByName">
+            <jpa:query>Select t FROM Teacher t where t.firstName =:firstName</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="StudentPK" abs="false" class="Student" superclassId="_154504939346091" v="true" xre="false" m="false" rootElement="_154504939340890" id="_154504939352499">
+        <jpa:attributes>
+            <jpa:basic attribute-type="int" v="true" name="points" ft="false" id="_1545049393524100"/>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_1545049393593108" connected-attribute-id="_1545049393593112" v="true" name="education" ft="false" id="_1545049393524101"/>
+        </jpa:attributes>
+        <jpa:nq e="true" name="findStudent">
+            <jpa:query>select s FROM Student s  WHERE s.personId = :personId</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="true" name="getStudentByName">
+            <jpa:query>Select s FROM Student s where s.firstName =:firstName</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="CoursePK" abs="false" class="Course" v="true" xre="false" m="false" rootElement="_154504939340890" id="_1545049393560102">
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="name" ft="false" id="_1545049393560104"/>
+            <jpa:basic attribute-type="int" v="true" name="points" ft="false" id="_1545049393560105">
+                <jpa:column unique="false" nullable="false" insertable="true" updatable="true"/>
+            </jpa:basic>
+            <jpa:many-to-one primaryKey="false" connected-entity-id="_154504939347797" connected-attribute-id="_154504939347798" v="true" name="teacher" ft="false" id="_1545049393560106"/>
+            <jpa:id attribute-type="Long" v="true" name="courseId" ft="false" id="_1545049393560103">
+                <jpa:column name="course_id" unique="false" nullable="true" insertable="true" updatable="true"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="EducationPK" abs="false" class="Education" v="true" xre="false" m="false" rootElement="_154504939340890" id="_1545049393593108">
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="name" ft="false" id="_1545049393593110"/>
+            <jpa:basic attribute-type="int" v="true" name="points" ft="false" id="_1545049393593111"/>
+            <jpa:one-to-many own="false" collection-type="java.util.Set" connected-entity-id="_154504939352499" connected-attribute-id="_1545049393524101" fetch="LAZY" v="true" name="students" ft="false" id="_1545049393593112">
+                <jpa:cascade>
+                    <jpa:cascade-persist/>
+                </jpa:cascade>
+            </jpa:one-to-many>
+            <jpa:many-to-many own="true" collection-type="java.util.Set" connected-entity-id="_1545049393560102" fetch="LAZY" v="true" name="courses" ft="false" id="_1545049393608113"/>
+            <jpa:id attribute-type="Long" v="true" name="educationId" ft="false" id="_1545049393593109">
+                <jpa:column name="education_id" unique="false" nullable="true" insertable="true" updatable="true"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="true" name="getEducationByName">
+            <jpa:query>Select e FROM Education e where e.name = :name</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
+ * This file was generated by the Jeddict
+ */</jpa:snp>
+    <jpa:c>
+        <db u="jdbc:derby://localhost:1527/ArtistJPA" n="root" p="root" d="org.apache.derby.jdbc.ClientDriver"/>
+    </jpa:c>
+    <jpa:wsl>
+        <jpa:ws n="Main" id="_1545049393677114">
+            <i ref="_1545049393593108" x="225" y="386"/>
+            <i ref="_154504939346091" x="433" y="154"/>
+            <i ref="_1545049393560102" x="32" y="154"/>
+            <i ref="_154504939347797" x="225" y="32"/>
+            <i ref="_154504939352499" x="626" y="386"/>
+        </jpa:ws>
+    </jpa:wsl>
+</jpa:entity-mappings>

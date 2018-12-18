@@ -15,8 +15,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @NamedQueries({
-    @NamedQuery(name = "findTeacher", query = "select Teacher t  WHERE t.personId = :personId")
-    ,@NamedQuery(name = "getTeacherByName", query = ("Select t FROM Teacher t where t.firstName =:firstName"))
+    @NamedQuery(name = "getAllTeachers", query = ("select t FROM Teacher t "))
+    ,@NamedQuery(name = "getTeacherByName", query = ("Select t FROM Teacher t where t.firstName LIKE :firstName"))
 })
 @Entity
 public class Teacher extends Person {
@@ -24,7 +24,7 @@ public class Teacher extends Person {
     @Basic
     private int Salary;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Course> courses;
 
     public Teacher() {
@@ -63,6 +63,11 @@ public class Teacher extends Person {
     public void removeCourse(Course course) {
         getCourses().remove(course);
         course.setTeacher(null);
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher " + super.toString() + " salary=" + Salary + ", courses=" + courses;
     }
 
 }

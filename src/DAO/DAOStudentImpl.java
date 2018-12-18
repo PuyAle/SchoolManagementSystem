@@ -25,7 +25,7 @@ public class DAOStudentImpl implements DAOStudent {
     }
 
     @Override
-    public boolean createStudent(Long personId, String firstName, String lastName, Gender gender) {
+    public Student createStudent(Long personId, String firstName, String lastName, Gender gender) {
 
         EntityManager em = null;
 
@@ -36,11 +36,11 @@ public class DAOStudentImpl implements DAOStudent {
             em.persist(s);
             em.getTransaction().commit();
 
-            return true;
+            return s;
 
         } catch (EntityExistsException ex) {
             System.err.println("The person does already exist in the system.");
-            return false;
+            return null;
 
             //catch (exception that handles commit problem?)
         } finally {
@@ -122,16 +122,28 @@ public class DAOStudentImpl implements DAOStudent {
 //        }
 //    }
     @Override
-    public List<Student> getStudent(Long personId) {
+    public Student getStudent(Long personId) {
 
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         try {
+            Student s = em.find(Student.class, personId);
+            return s;
+        } catch (EntityNotFoundException e) {
+            System.out.println(e);
+            return null;
+        } finally {
+            em.close();
+        }
 
-            TypedQuery<Student> q = em.createNamedQuery("findStudent", Student.class);
+    }
 
-            q.setParameter("personId", personId);
-            List<Student> list = q.getResultList();
+    @Override
+    public List<Student> getStudentByName(String firstName) {
 
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Student> q = em.createNamedQuery("getStudentByName", Student.class);
+            List<Student> list = q.setParameter("firstName", "%" + firstName + "%").getResultList();
             return list;
         } finally {
             em.close();
@@ -139,12 +151,12 @@ public class DAOStudentImpl implements DAOStudent {
     }
 
     @Override
-    public List<Student> getStudentByName(String firstName) {
+    public List<Student> getAllStudents() {
 
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         try {
-            TypedQuery<Student> q = em.createNamedQuery("getStudentByName", Student.class);
-            List<Student> list = q.setParameter("firstName", firstName + "%").getResultList();
+            TypedQuery<Student> q = em.createNamedQuery("getAllStudents", Student.class);
+            List<Student> list = q.getResultList();
             return list;
         } finally {
             em.close();

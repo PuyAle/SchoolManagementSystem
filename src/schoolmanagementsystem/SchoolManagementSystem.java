@@ -2,6 +2,8 @@ package schoolmanagementsystem;
 
 import DAO.*;
 import Entity.domain.*;
+import UI.UI;
+import UIDAOcom.UICommunicationDAOMain;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
@@ -13,18 +15,29 @@ import javax.persistence.Query;
 
 public class SchoolManagementSystem {
 
+    public static boolean loop = true;
+
     public static void main(String[] args) {
 
+        while (loop) {
+            UICommunicationDAOMain.DAOProjectCom(UI.mainMenu());
+        }
+
         //DAOStudentImpl dao = new DAOStudentImpl();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
-
-        EntityManager em = emf.createEntityManager();
-
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
+//
+//        EntityManager em = emf.createEntityManager();
 //////        Teacher bitaJabbari = new Teacher(7501010000l, "Bita", "Jabbari", Gender.FEMALE, 40000);
 ////////
-        Course javaProgrammering = new Course("Java programmering", 50);
-////
-        Education javaUtv = new Education("Javautvecklare", 400);
+//        Course javaProgrammering = new Course("C++", 50);
+////        javaProgrammering.addEducation(em.find(Education.class, 2l));
+//        Education e = em.find(Education.class, 351l);
+//        em.getTransaction().begin();
+//        e.addCourse(javaProgrammering);
+//        ;
+//        em.getTransaction().commit();
+////////
+//        Education javaUtv = new Education("Javautvecklare", 400);
 ////
 ////        //EntityManager em = dao.getEntityManager();
 ////
@@ -55,13 +68,26 @@ public class SchoolManagementSystem {
 //            }
 //
 //        }
-
 //remove course
 //        em.getTransaction().begin();
-//        Education e = em.getReference(Education.class, 501l);
-//        e.removeCourse(em.getReference(Course.class, 502l));
 //
-        em.remove(em.find(Course.class, 502l));
+//        Course c = em.getReference(Course.class, 851l);
+//        c.getEducations().clear();
+//        em.remove(c);
+//        em.getTransaction().commit();
+//remove education
+//        em.getTransaction().begin();
+//        Education e = em.find(Education.class, 2l);
+//        Set<Course> setC = e.getCourses();
+//        for (Course course : setC) {
+//            course.removeEducation(e);
+//        }
+//        // e.getCourses().clear();
+//        Set<Student> s = e.getStudents();
+//        for (Student student : s) {
+//            student.setEducation(null);
+//        }
+//        em.remove(e);
 //        em.getTransaction().commit();
 //Student s = em.getReference(Student.class, 8805130000l);
         //Education e = s.getEducation();
@@ -90,7 +116,7 @@ public class SchoolManagementSystem {
 //
 //        }
 //
-//        em.getTransaction().commit();
+//        em.get Transaction().commit();
 //        List<Course> courses2 = t.getCourses();
 //        for (Course course : courses2) {
 //            System.out.println(course);

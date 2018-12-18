@@ -17,14 +17,16 @@ import java.util.List;
  */
 public interface DAOStudent {
 
-    boolean createStudent(Long personId, String firstName, String lastName, Gender gender);
+    Student createStudent(Long personId, String firstName, String lastName, Gender gender);
 
     //boolean updateStudentPoints(Long personId);
     void updateStudentEducation(long personId, long educationId);
 
-    List<Student> getStudent(Long personId);
+    Student getStudent(Long personId);
 
     List<Student> getStudentByName(String firstName);
+
+    List<Student> getAllStudents();
 
     boolean removeStudent(Long personId);
 

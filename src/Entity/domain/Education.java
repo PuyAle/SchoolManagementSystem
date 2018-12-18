@@ -16,13 +16,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
-/**
- * @author puyaa
- */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "getAllEducations", query = ("Select e From Education e"))
+    ,
+    @NamedQuery(name = "getEducationByName", query = ("Select e FROM Education e where e.name LIKE :name"))})
 public class Education {
 
     @Id
@@ -37,6 +41,7 @@ public class Education {
     private int points;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
+
     private Set<Course> courses;
 
     @OneToMany(mappedBy = "education", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
@@ -48,7 +53,6 @@ public class Education {
     public Education(String name, int points) {
         this.name = name;
         this.points = points;
-
     }
 
     public Long getEducationId() {
