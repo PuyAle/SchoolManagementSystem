@@ -130,11 +130,12 @@ public class UI {
         while (loop) {
             try {
                 System.out.println("==================================");
-                System.out.println("1. Register a education");
-                System.out.println("2. Add a course to the education");
-                System.out.println("3. Find a education by id");
-                System.out.println("4. Find education by name");
-                System.out.println("5. Delete a education");
+                System.out.println("1. Register a course");
+                System.out.println("2. Add a course to a education");
+                System.out.println("3. Find a course by id");
+                System.out.println("4. Find a course by name");
+                System.out.println("5. Find all courses");
+                System.out.println("6. Delete a course");
                 System.out.println("0. Exit");
                 System.out.println("==================================");
 

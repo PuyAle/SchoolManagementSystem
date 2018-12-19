@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface DAOCourse {
 
-    void createCourse(String name, int points);
+    Course createCourse(String name, int points);
 
     void addEducation(long courseId, long educationId);
 

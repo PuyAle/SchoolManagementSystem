@@ -40,7 +40,7 @@ public class Education {
     @Basic
     private int points;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 
     private Set<Course> courses;
 
@@ -123,7 +123,7 @@ public class Education {
 
     @Override
     public String toString() {
-        return "Education{" + "educationId=" + educationId + ", name=" + name + ", points=" + points + '}';
+        return "Education{" + "educationId=" + educationId + ", name=" + name + ", points=" + points + ", courses=" + courses + '}';
     }
 
 }

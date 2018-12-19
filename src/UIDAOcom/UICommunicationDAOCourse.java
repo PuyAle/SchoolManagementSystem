@@ -1,14 +1,28 @@
 package UIDAOcom;
 
+import Entity.domain.Course;
 import UI.UI;
+import java.util.Scanner;
 
 class UICommunicationDAOCourse {
+
+    Scanner sc = new Scanner(System.in);
 
     public void switchCourse(UI ui, DAO.DAOEducationImpl dbe, DAO.DAOCourseImpl dbc) {
         switch (ui.courseMenu()) {
             case 1:
-                dbc.createCourse(ui.enterName(" course "), ui.enterPoints());
+                Course c = dbc.createCourse(ui.enterName(" course "), ui.enterPoints());
+                System.out.println("Do you want to add the course to a education? \nEnter 'yes' to add education, otherwise press any key to continue.");
+                String choice = sc.nextLine();
+                if (choice.equalsIgnoreCase("yes")) {
+                    ui.printList(dbc.getAllCourses());
+                    System.out.println("Enter the id for the course:");
+                    dbe.addCourse(c.getCourseId(), ui.enterId("education"));
+                } else {
+                    break;
+                }
                 break;
+
             case 2:
                 dbc.addEducation(ui.enterId("course"), ui.enterId("education"));
                 break;
@@ -19,6 +33,9 @@ class UICommunicationDAOCourse {
                 ui.printList(dbc.getCourseByName(ui.enterName(" course ")));
                 break;
             case 5:
+                ui.printList(dbc.getAllCourses());
+                break;
+            case 6:
                 dbc.removeCourse(ui.enterId("course"));
                 break;
             default:

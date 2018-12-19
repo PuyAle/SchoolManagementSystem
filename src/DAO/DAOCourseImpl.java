@@ -22,7 +22,7 @@ public class DAOCourseImpl implements DAOCourse {
     }
 
     @Override
-    public void createCourse(String name, int points) {
+    public Course createCourse(String name, int points) {
         EntityManager em = null;
 
         try {
@@ -31,7 +31,7 @@ public class DAOCourseImpl implements DAOCourse {
             Course c = new Course(name, points);
             em.persist(c);
             em.getTransaction().commit();
-
+            return c;
             //catcha något annat
         }// catch (EntityExistsException ex) {
         //            System.err.println("The Education does already exist in the system.");
