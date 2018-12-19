@@ -22,7 +22,7 @@ import javax.persistence.OneToMany;
 public class Teacher extends Person {
 
     @Basic
-    private int Salary;
+    private int salary;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Course> courses;
@@ -32,16 +32,16 @@ public class Teacher extends Person {
 
     public Teacher(Long personId, String firstName, String lastName, Gender gender, int Salary) {
         super(personId, firstName, lastName, gender);
-        this.Salary = Salary;
+        this.salary = Salary;
 
     }
 
     public int getSalary() {
-        return this.Salary;
+        return this.salary;
     }
 
-    public void setSalary(int Salary) {
-        this.Salary = Salary;
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 
     public Set<Course> getCourses() {
@@ -67,7 +67,7 @@ public class Teacher extends Person {
 
     @Override
     public String toString() {
-        return "Teacher " + super.toString() + " salary=" + Salary + ", courses=" + courses;
+        return "Teacher " + super.toString() + " salary=" + salary + ", courses=" + courses;
     }
 
 }

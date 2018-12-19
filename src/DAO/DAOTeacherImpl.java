@@ -1,29 +1,22 @@
 package DAO;
 
 import Entity.domain.Course;
-import Entity.domain.Education;
 import Entity.domain.Gender;
-import Entity.domain.Student;
 import Entity.domain.Teacher;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 public class DAOTeacherImpl implements DAOTeacher {
 
-    public static EntityManagerFactory emf;
-
     public DAOTeacherImpl() {
-        emf = Persistence.createEntityManagerFactory("PU");
     }
 
     public static EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return DAOCourseImpl.getEntityManager();
     }
 
     @Override
@@ -61,7 +54,7 @@ public class DAOTeacherImpl implements DAOTeacher {
             Teacher t = em.getReference(Teacher.class, personId);
             t.setSalary(newSalary);
             em.getTransaction().commit();
-        } catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException e) {
             System.out.println("The person doesn't exist in the system.");
 
         } finally {
@@ -82,7 +75,7 @@ public class DAOTeacherImpl implements DAOTeacher {
             Course c = em.getReference(Course.class, courseId);
             c.setTeacher(t);
             em.getTransaction().commit();
-        } catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException e) {
             System.out.println("The person doesn't exist in the system.");
 
         } finally {
@@ -99,7 +92,7 @@ public class DAOTeacherImpl implements DAOTeacher {
             Teacher t = em.find(Teacher.class, personId);
             return t;
         } catch (EntityNotFoundException e) {
-            System.out.println(e);
+            System.out.println("The person doesn't exist in the system.");
             return null;
         } finally {
             em.close();
@@ -108,7 +101,7 @@ public class DAOTeacherImpl implements DAOTeacher {
 
     @Override
     public List<Teacher> getTeacherByName(String firstName) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         try {
             TypedQuery<Teacher> q = em.createNamedQuery("getTeacherByName", Teacher.class);
             List<Teacher> list = q.setParameter("firstName", firstName + "%").getResultList();
@@ -120,7 +113,7 @@ public class DAOTeacherImpl implements DAOTeacher {
 
     @Override
     public List<Teacher> getAllTeachers() {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         try {
             TypedQuery<Teacher> q = em.createNamedQuery("getAllTeachers", Teacher.class);
             List<Teacher> list = q.getResultList();
@@ -144,7 +137,7 @@ public class DAOTeacherImpl implements DAOTeacher {
             }
             em.remove(t);
             em.getTransaction().commit();
-        } catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException e) {
             System.out.println("The person doesn't exist in the system. ");
 
         } finally {

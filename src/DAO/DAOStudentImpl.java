@@ -3,25 +3,17 @@ package DAO;
 import Entity.domain.Education;
 import Entity.domain.Gender;
 import Entity.domain.Student;
-import java.time.LocalDate;
 import java.util.List;
-import javax.management.Query;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.*;
 
 public class DAOStudentImpl implements DAOStudent {
 
-    public static EntityManagerFactory emf;
-
     public DAOStudentImpl() {
-        emf = Persistence.createEntityManagerFactory("PU");
-
     }
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return DAOCourseImpl.getEntityManager();
     }
 
     @Override
@@ -61,7 +53,7 @@ public class DAOStudentImpl implements DAOStudent {
             Education e = em.getReference(Education.class, educationId);
             e.addStudent(s);
             em.getTransaction().commit();
-        } catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException e) {
             System.out.println("The person doesn't exist in the system.");
 
         } finally {
@@ -129,7 +121,7 @@ public class DAOStudentImpl implements DAOStudent {
             Student s = em.find(Student.class, personId);
             return s;
         } catch (EntityNotFoundException e) {
-            System.out.println(e);
+            System.out.println("The person doesn't exist in the system.");
             return null;
         } finally {
             em.close();
@@ -174,7 +166,7 @@ public class DAOStudentImpl implements DAOStudent {
             em.remove(s);
             em.getTransaction().commit();
             return true;
-        } catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException e) {
             System.out.println("The person doesn't exist in the system. ");
             return false;
         } finally {

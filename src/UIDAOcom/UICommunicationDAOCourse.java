@@ -8,7 +8,7 @@ class UICommunicationDAOCourse {
 
     Scanner sc = new Scanner(System.in);
 
-    public void switchCourse(UI ui, DAO.DAOEducationImpl dbe, DAO.DAOCourseImpl dbc) {
+    public boolean switchCourse(UI ui, DAO.DAOEducationImpl dbe, DAO.DAOCourseImpl dbc) {
         switch (ui.courseMenu()) {
             case 1:
                 Course c = dbc.createCourse(ui.enterName(" course "), ui.enterPoints());
@@ -38,9 +38,12 @@ class UICommunicationDAOCourse {
             case 6:
                 dbc.removeCourse(ui.enterId("course"));
                 break;
+            case 0:
+                return false;
             default:
                 System.out.println("Wrong choice, try again. ");
-
+                break;
         }
+        return true;
     }
 }

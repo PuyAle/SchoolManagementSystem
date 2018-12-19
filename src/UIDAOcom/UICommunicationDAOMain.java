@@ -4,13 +4,18 @@ import DAO.DAOCourseImpl;
 import DAO.DAOEducationImpl;
 import DAO.DAOStudentImpl;
 import DAO.DAOTeacherImpl;
-import Entity.domain.Gender;
+
 import UI.UI;
-import schoolmanagementsystem.SchoolManagementSystem;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class UICommunicationDAOMain {
 
-    public static void DAOProjectCom(int i) {
+    public UICommunicationDAOMain() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
+    }
+
+    public static boolean DAOProjectCom(int i) {
 
 //create a constructor with 1 entitymanagerfactory that is used for every entityDAO.
         DAOStudentImpl dbs = new DAOStudentImpl();
@@ -30,32 +35,31 @@ public class UICommunicationDAOMain {
         while (loop) {
             switch (i) {
                 case 1:
-                    dbsCom.studentSwitch(dbs, ui, dbe);
+                    loop = dbsCom.studentSwitch(dbs, ui, dbe);
                     break;
                 case 2:
-                    dbtCom.switchTeacher(ui, dbt, dbc);
+                    loop = dbtCom.switchTeacher(ui, dbt, dbc);
                     break;
                 case 3:
-                    dbeCom.switchEducation(ui, dbe, dbc);
+                    loop = dbeCom.switchEducation(ui, dbe, dbc);
                     break;
                 case 4:
-                    dbcCom.switchCourse(ui, dbe, dbc);
+                    loop = dbcCom.switchCourse(ui, dbe, dbc);
                     break;
 
                 case 0:
+
                     //lägg in en metod som skapats i daoimpl klassen som
                     //avslutar emf i en try catch. dvs. att den ska avsluta den
                     //enbart om det finns en dvs emf !=null.
-                    loop = false;
-                    SchoolManagementSystem.loop = false;
-                    break;
+                    return false;
+
                 default:
                     System.out.println("Wrong choice");
-                    ;
 
             }
-            loop = false;
         }
+        return true;
     }
 
 }

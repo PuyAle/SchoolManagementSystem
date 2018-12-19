@@ -10,7 +10,7 @@ public class UICommunicationDAOStudent {
 
     Scanner sc = new Scanner(System.in);
 
-    public void studentSwitch(DAOStudentImpl db, UI ui, DAOEducationImpl dbe) {
+    public boolean studentSwitch(DAOStudentImpl db, UI ui, DAOEducationImpl dbe) {
         switch (ui.studentMenu()) {
             case 1:
 
@@ -21,8 +21,6 @@ public class UICommunicationDAOStudent {
                     ui.printList(dbe.getAllEducations());
                     System.out.println("Enter the id for the education:");
                     db.updateStudentEducation(s.getPersonId(), ui.enterId("education"));
-                } else {
-                    break;
                 }
                 break;
             case 2:
@@ -41,9 +39,13 @@ public class UICommunicationDAOStudent {
             case 6:
                 db.removeStudent(ui.enterId("student"));
                 break;
+            case 0:
+                return false;
             default:
                 System.out.println("wrong choice");
+                break;
         }
+        return true;
     }
 
 }

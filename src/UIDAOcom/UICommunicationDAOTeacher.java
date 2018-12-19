@@ -10,7 +10,7 @@ public class UICommunicationDAOTeacher {
 
     Scanner sc = new Scanner(System.in);
 
-    public void switchTeacher(UI ui, DAOTeacherImpl dbt, DAOCourseImpl dbc) {
+    public boolean switchTeacher(UI ui, DAOTeacherImpl dbt, DAOCourseImpl dbc) {
         switch (ui.teacherMenu()) {
             case 1:
                 Teacher t = dbt.createTeacher(ui.enterId("teacher"), ui.enterName(" teachers first "), ui.enterName(" teachers last "), ui.enterGender(), ui.enterSalary());
@@ -20,8 +20,7 @@ public class UICommunicationDAOTeacher {
                     ui.printList(dbc.getAllCourses());
                     System.out.println("Enter the id for the course:");
                     dbt.updateTeacherCourse(t.getPersonId(), ui.enterId("course"));
-                } else {
-                    break;
+
                 }
                 break;
 
@@ -50,10 +49,14 @@ public class UICommunicationDAOTeacher {
                 dbt.removeTeacher(ui.enterId("teacher"));
                 break;
 
+            case 0:
+                return false;
+
             default:
                 System.out.println("Wrong choice");
-
+                break;
         }
+        return true;
     }
 
 }

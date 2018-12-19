@@ -3,6 +3,7 @@ package DAO;
 import Entity.domain.Course;
 import Entity.domain.Education;
 import java.util.List;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
@@ -11,13 +12,15 @@ import javax.persistence.TypedQuery;
 
 public class DAOCourseImpl implements DAOCourse {
 
-    public static EntityManagerFactory emf;
+    private static volatile EntityManagerFactory emf;
+//    public DAOCourseImpl() {
+//        emf = Persistence.createEntityManagerFactory("PU");
+//    }
 
-    public DAOCourseImpl() {
-        emf = Persistence.createEntityManagerFactory("PU");
-    }
-
-    public EntityManager getEntityManager() {
+    synchronized public static EntityManager getEntityManager() {
+        if (emf == null) {
+            emf = Persistence.createEntityManagerFactory("PU");
+        }
         return emf.createEntityManager();
     }
 
@@ -32,13 +35,11 @@ public class DAOCourseImpl implements DAOCourse {
             em.persist(c);
             em.getTransaction().commit();
             return c;
-            //catcha något annat
-        }// catch (EntityExistsException ex) {
-        //            System.err.println("The Education does already exist in the system.");
-        //            return false;
-        //}
-        //catch (exception that handles commit problem?)
-        finally {
+
+        } catch (EntityExistsException ex) {
+            System.err.println("The course does already exist in the system.");
+            return null;
+        } finally {
             if (em != null) {
                 em.close();
             }
@@ -56,10 +57,9 @@ public class DAOCourseImpl implements DAOCourse {
             e.addCourse(em.find(Course.class, courseId));
             em.getTransaction().commit();
 
-        } catch (EntityNotFoundException | IllegalArgumentException e) {
+        } catch (EntityNotFoundException e) {
             System.err.println("The course or education does not exist in the system.");
 
-            //catch (exception that handles commit problem?)
         } finally {
             if (em != null) {
                 em.close();
@@ -74,7 +74,7 @@ public class DAOCourseImpl implements DAOCourse {
             Course c = em.find(Course.class, courseId);
             return c;
         } catch (EntityNotFoundException e) {
-            System.out.println(e);
+            System.out.println("The course doesn't exist in the system.");
             return null;
         } finally {
             em.close();
@@ -119,7 +119,7 @@ public class DAOCourseImpl implements DAOCourse {
             em.remove(c);
             em.getTransaction().commit();
         } catch (EntityNotFoundException e) {
-            System.out.println(e);
+            System.out.println("The course doesn't exist in the system.");
         } finally {
             if (em != null) {
                 em.close();

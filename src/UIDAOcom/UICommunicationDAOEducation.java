@@ -8,7 +8,7 @@ class UICommunicationDAOEducation {
 
     Scanner sc = new Scanner(System.in);
 
-    public void switchEducation(UI ui, DAO.DAOEducationImpl dbe, DAO.DAOCourseImpl dbc) {
+    public boolean switchEducation(UI ui, DAO.DAOEducationImpl dbe, DAO.DAOCourseImpl dbc) {
         switch (ui.educationMenu()) {
             case 1:
                 Education e = dbe.createEducation(ui.enterName(" education "), ui.enterPoints());
@@ -18,8 +18,6 @@ class UICommunicationDAOEducation {
                     ui.printList(dbc.getAllCourses());
                     System.out.println("Enter the id for the course:");
                     dbe.addCourse(e.getEducationId(), ui.enterId("course"));
-                } else {
-                    break;
                 }
                 break;
             case 2:
@@ -37,10 +35,13 @@ class UICommunicationDAOEducation {
             case 6:
                 dbe.removeEducation(ui.enterId("education"));
                 break;
+            case 0:
+                return false;
             default:
                 System.out.println("Wrong choice, try again. ");
 
         }
+        return true;
     }
 
 }

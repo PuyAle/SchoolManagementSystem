@@ -7,12 +7,9 @@ import java.util.Scanner;
 public class UI {
 
     final static Scanner sc = new Scanner(System.in);
-//
-    private static int choice;
 
     public static int mainMenu() {
-        boolean loop = true;
-        while (loop) {
+        while (true) {
             try {
                 System.out.println("==================================");
                 System.out.println("1. Student");
@@ -23,23 +20,22 @@ public class UI {
                 System.out.println("==================================");
 
                 System.out.println("Enter a number from the menu");
-                choice = sc.nextInt();
+                int choice = sc.nextInt();
                 sc.nextLine();
-                loop = false;
+                return choice;
 
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 sc.nextLine();
                 System.out.println("wrong choice try again");
             }
 
         }
 
-        return choice;
     }
 
     public int studentMenu() {
-        boolean loop = true;
-        while (loop) {
+
+        while (true) {
             try {
                 System.out.println("==================================");
                 System.out.println("1. Register student");
@@ -52,23 +48,22 @@ public class UI {
                 System.out.println("==================================");
 
                 System.out.println("Enter a number from the menu");
-                choice = sc.nextInt();
+                int choice = sc.nextInt();
                 sc.nextLine();
-                loop = false;
+                return choice;
 
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 sc.nextLine();
                 System.out.println("wrong choice try again");
             }
 
         }
 
-        return choice;
     }
 
     public int teacherMenu() {
-        boolean loop = true;
-        while (loop) {
+
+        while (true) {
             try {
                 System.out.println("==================================");
                 System.out.println("1. Register teacher");
@@ -82,23 +77,19 @@ public class UI {
                 System.out.println("==================================");
 
                 System.out.println("Enter a number from the menu");
-                choice = sc.nextInt();
+                int choice = sc.nextInt();
                 sc.nextLine();
-                loop = false;
+                return choice;
 
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 sc.nextLine();
                 System.out.println("wrong choice try again");
             }
-
         }
-
-        return choice;
     }
 
     public int educationMenu() {
-        boolean loop = true;
-        while (loop) {
+        while (true) {
             try {
                 System.out.println("==================================");
                 System.out.println("1. Register a education");
@@ -111,23 +102,19 @@ public class UI {
                 System.out.println("==================================");
 
                 System.out.println("Enter a number from the menu");
-                choice = sc.nextInt();
+                int choice = sc.nextInt();
                 sc.nextLine();
-                loop = false;
+                return choice;
 
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 sc.nextLine();
                 System.out.println("wrong choice try again");
             }
-
         }
-
-        return choice;
     }
 
     public int courseMenu() {
-        boolean loop = true;
-        while (loop) {
+        while (true) {
             try {
                 System.out.println("==================================");
                 System.out.println("1. Register a course");
@@ -140,18 +127,15 @@ public class UI {
                 System.out.println("==================================");
 
                 System.out.println("Enter a number from the menu");
-                choice = sc.nextInt();
+                int choice = sc.nextInt();
                 sc.nextLine();
-                loop = false;
+                return choice;
 
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 sc.nextLine();
                 System.out.println("wrong choice try again");
             }
-
         }
-
-        return choice;
     }
 
     public String enterName(String type) {
@@ -161,7 +145,7 @@ public class UI {
                 System.out.println("Enter the" + type + "name");
                 String name = sc.nextLine();
                 return name;
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 System.out.println("wrong choice try again");
 
             }
@@ -180,7 +164,7 @@ public class UI {
                 sc.nextLine();
                 loop = false;
 
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 sc.nextLine();
                 System.out.println("Wrong choice");
             }
@@ -205,7 +189,7 @@ public class UI {
                 id = sc.nextLong();
                 sc.nextLine();
                 loop = false;
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 System.out.println("Wrong choice!");
             }
         }
@@ -226,7 +210,7 @@ public class UI {
                     return Gender.MALE;
                 }
 
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 System.out.println("Wrong choice!");
             }
         }
@@ -244,7 +228,7 @@ public class UI {
                 sc.nextLine();
                 loop = false;
 
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 sc.nextLine();
                 System.out.println("Wrong choice");
             }
