@@ -16,7 +16,7 @@ public class DAOEducationImpl implements DAOEducation {
     }
 
     public EntityManager getEntityManager() {
-        return DAOCourseImpl.getEntityManager();
+        return MyEntityManager.getEntityManager();
     }
 
     @Override

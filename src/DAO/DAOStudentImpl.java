@@ -13,7 +13,7 @@ public class DAOStudentImpl implements DAOStudent {
     }
 
     public EntityManager getEntityManager() {
-        return DAOCourseImpl.getEntityManager();
+        return MyEntityManager.getEntityManager();
     }
 
     @Override

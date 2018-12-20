@@ -5,23 +5,16 @@ import Entity.domain.Education;
 import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 public class DAOCourseImpl implements DAOCourse {
 
-    private static volatile EntityManagerFactory emf;
-//    public DAOCourseImpl() {
-//        emf = Persistence.createEntityManagerFactory("PU");
-//    }
+    public DAOCourseImpl() {
+    }
 
-    synchronized public static EntityManager getEntityManager() {
-        if (emf == null) {
-            emf = Persistence.createEntityManagerFactory("PU");
-        }
-        return emf.createEntityManager();
+    public EntityManager getEntityManager() {
+        return MyEntityManager.getEntityManager();
     }
 
     @Override

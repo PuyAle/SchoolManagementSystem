@@ -16,7 +16,7 @@ public class DAOTeacherImpl implements DAOTeacher {
     }
 
     public static EntityManager getEntityManager() {
-        return DAOCourseImpl.getEntityManager();
+        return MyEntityManager.getEntityManager();
     }
 
     @Override

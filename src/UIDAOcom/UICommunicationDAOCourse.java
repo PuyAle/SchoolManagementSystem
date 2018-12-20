@@ -18,8 +18,6 @@ class UICommunicationDAOCourse {
                     ui.printList(dbc.getAllCourses());
                     System.out.println("Enter the id for the course:");
                     dbe.addCourse(c.getCourseId(), ui.enterId("education"));
-                } else {
-                    break;
                 }
                 break;
 

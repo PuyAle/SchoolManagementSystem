@@ -49,9 +49,6 @@ public class UICommunicationDAOMain {
 
                 case 0:
 
-                    //lägg in en metod som skapats i daoimpl klassen som
-                    //avslutar emf i en try catch. dvs. att den ska avsluta den
-                    //enbart om det finns en dvs emf !=null.
                     return false;
 
                 default:
