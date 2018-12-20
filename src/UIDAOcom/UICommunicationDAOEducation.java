@@ -19,21 +19,28 @@ class UICommunicationDAOEducation {
                     System.out.println("Enter the id for the course:");
                     dbe.addCourse(e.getEducationId(), ui.enterId("course"));
                 }
+                ui.enterToContinue();
                 break;
             case 2:
+                dbc.getAllCourses();
                 dbe.addCourse(ui.enterId("education"), ui.enterId("course"));
+                ui.enterToContinue();
                 break;
             case 3:
                 System.out.println(dbe.getEducation(ui.enterId("education")));
+                ui.enterToContinue();
                 break;
             case 4:
                 ui.printList(dbe.getEducationByName(ui.enterName(" education ")));
+                ui.enterToContinue();
                 break;
             case 5:
                 ui.printList(dbe.getAllEducations());
+                ui.enterToContinue();
                 break;
             case 6:
                 dbe.removeEducation(ui.enterId("education"));
+                ui.enterToContinue();
                 break;
             case 0:
                 return false;

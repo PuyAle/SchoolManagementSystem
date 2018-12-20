@@ -22,31 +22,38 @@ public class UICommunicationDAOTeacher {
                     dbt.updateTeacherCourse(t.getPersonId(), ui.enterId("course"));
 
                 }
+                ui.enterToContinue();
                 break;
 
             case 2:
                 ui.printList(dbc.getAllCourses());
                 dbt.updateTeacherCourse(ui.enterId("teacher"), ui.enterId("course"));
+                ui.enterToContinue();
                 break;
 
             case 3:
                 System.out.println(dbt.getTeacher(ui.enterId("teacher")));
+                ui.enterToContinue();
                 break;
 
             case 4:
                 ui.printList(dbt.getTeacherByName(ui.enterName(" teacher ")));
+                ui.enterToContinue();
                 break;
 
             case 5:
                 ui.printList(dbt.getAllTeachers());
+                ui.enterToContinue();
                 break;
 
             case 6:
                 dbt.updateTeacherSalary(ui.enterId("teacher"), ui.enterSalary());
+                ui.enterToContinue();
                 break;
 
             case 7:
                 dbt.removeTeacher(ui.enterId("teacher"));
+                ui.enterToContinue();
                 break;
 
             case 0:

@@ -22,22 +22,27 @@ public class UICommunicationDAOStudent {
                     System.out.println("Enter the id for the education:");
                     db.updateStudentEducation(s.getPersonId(), ui.enterId("education"));
                 }
+                ui.enterToContinue();
                 break;
             case 2:
-
                 db.updateStudentEducation(ui.enterId("student"), ui.enterId("education"));
+                ui.enterToContinue();
                 break;
             case 3:
                 System.out.println(db.getStudent(ui.enterId("student")));
+                ui.enterToContinue();
                 break;
             case 4:
                 ui.printList(db.getStudentByName(ui.enterName(" students ")));
+                ui.enterToContinue();
                 break;
             case 5:
                 ui.printList(db.getAllStudents());
+                ui.enterToContinue();
                 break;
             case 6:
                 db.removeStudent(ui.enterId("student"));
+                ui.enterToContinue();
                 break;
             case 0:
                 return false;

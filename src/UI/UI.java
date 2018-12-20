@@ -236,4 +236,10 @@ public class UI {
         return points;
     }
 
+    public void enterToContinue() {
+
+        System.out.println(">>>>>Press enter to continue>>>>>");
+        sc.nextLine();
+    }
+
 }
