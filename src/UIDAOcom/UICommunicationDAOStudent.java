@@ -24,7 +24,7 @@ public class UICommunicationDAOStudent {
                 }
                 break;
             case 2:
-                System.out.println("Enter first the person id and second the education id");
+
                 db.updateStudentEducation(ui.enterId("student"), ui.enterId("education"));
                 break;
             case 3:
