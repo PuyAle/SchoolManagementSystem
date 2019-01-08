@@ -1,5 +1,6 @@
 package DAO;
 
+import Entity.domain.Course;
 import Entity.domain.Education;
 import Entity.domain.Gender;
 import Entity.domain.Student;
@@ -51,7 +52,13 @@ public class DAOStudentImpl implements DAOStudent {
             em.getTransaction().begin();
             Student s = em.getReference(Student.class, personId);
             Education e = em.getReference(Education.class, educationId);
-            e.addStudent(s);
+            if (s.getEducation() == null) {
+                e.addStudent(s);
+            } else {
+                Education oldE = s.getEducation();
+                oldE.removeStudent(s);
+                e.addStudent(s);
+            }
             em.getTransaction().commit();
         } catch (EntityNotFoundException e) {
             System.out.println("The person doesn't exist in the system.");
@@ -69,29 +76,27 @@ public class DAOStudentImpl implements DAOStudent {
     //Create a variable in the student class that has the acctual course set in it, so after the changeCourse method is called
     // it shoulde change the course variable and get the old points from that course.
     //@Override
-//    public boolean updateStudentPoints(Long personId) {
-//        EntityManager em = null;
-//        try {
-//            em = getEntityManager();
-//            em.getTransaction().begin();
-//            Student s = em.getReference(Student.class, personId);
-//            Education e = s.getEducation();
-//            e.
-//            int newPoints = s.getPoints() +;
-//            s.setPoints(newPoints);
-//            em.getTransaction().commit();
-//
-//            return true;
-//        } catch (EntityNotFoundException ex) {
-//            System.out.println("The person doesn't exist in the system.");
-//            return false;
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//
-//    }
+    public boolean updateStudentPoints(Long personId, Course course) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Student s = em.getReference(Student.class, personId);
+            int newPoints = s.getPoints() + course.getPoints();
+            s.setPoints(newPoints);
+            em.getTransaction().commit();
+
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("The person doesn't exist in the system.");
+            return false;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+
+    }
 //    @Override
 //    public boolean updateStudentEducation(Long personId, Education newEducation) {
 //        EntityManager em = null;
@@ -113,6 +118,7 @@ public class DAOStudentImpl implements DAOStudent {
 //            }
 //        }
 //    }
+
     @Override
     public Student getStudent(Long personId) {
 

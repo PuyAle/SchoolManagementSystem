@@ -35,7 +35,7 @@ public class UICommunicationDAOMain {
         while (loop) {
             switch (i) {
                 case 1:
-                    loop = dbsCom.studentSwitch(dbs, ui, dbe);
+                    loop = dbsCom.studentSwitch(dbs, ui, dbe, dbc);
                     break;
                 case 2:
                     loop = dbtCom.switchTeacher(ui, dbt, dbc);

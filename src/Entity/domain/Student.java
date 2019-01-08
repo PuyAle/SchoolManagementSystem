@@ -3,7 +3,7 @@
  */
 package Entity.domain;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +16,7 @@ import javax.persistence.NamedQuery;
     ,@NamedQuery(name = "getStudentByName", query = ("Select s FROM Student s where s.firstName LIKE :firstName"))
 })
 @Entity
-public class Student extends Person {
+public class Student extends Person implements Serializable {
 
     @Basic
     private int points;

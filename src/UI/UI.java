@@ -3,6 +3,7 @@ package UI;
 import Entity.domain.Gender;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class UI {
 
@@ -39,11 +40,12 @@ public class UI {
             try {
                 System.out.println("==================================");
                 System.out.println("1. Register student");
-                System.out.println("2. Add Education to student");
-                System.out.println("3. Find student by id");
-                System.out.println("4. Find student by name");
-                System.out.println("5. Find all students");
-                System.out.println("6. Delete student");
+                System.out.println("2. Add or change education for student");
+                System.out.println("3. Register completed course");
+                System.out.println("4. Find student by id");
+                System.out.println("5. Find student by name");
+                System.out.println("6. Find all students");
+                System.out.println("7. Delete student");
                 System.out.println("0. Exit");
                 System.out.println("==================================");
 
@@ -177,6 +179,14 @@ public class UI {
             System.out.println("Is empty!");
         } else {
             a.forEach(System.out::println);
+        }
+    }
+
+    public <T> void printSet(Set<T> set) {
+        if (set.isEmpty()) {
+            System.out.println("Is empty!");
+        } else {
+            set.forEach(System.out::println);
         }
     }
 
