@@ -17,7 +17,6 @@ public class UICommunicationDAOMain {
 
     public static boolean DAOProjectCom(int i) {
 
-//create a constructor with 1 entitymanagerfactory that is used for every entityDAO.
         DAOStudentImpl dbs = new DAOStudentImpl();
         DAOTeacherImpl dbt = new DAOTeacherImpl();
         DAOEducationImpl dbe = new DAOEducationImpl();

@@ -3,14 +3,12 @@
  */
 package Entity.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +24,7 @@ import javax.persistence.NamedQuery;
 @NamedQuery(name = "getCourseByName", query = ("Select c FROM Course c where c.name LIKE :name"))})
 
 @Entity
-public class Course {
+public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

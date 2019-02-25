@@ -38,8 +38,12 @@ public class UICommunicationDAOStudent {
                 ui.printList(e1.getCourses());
                 System.out.println("\nChose one of the courses that the student has completed");
                 Course c = dbc.getCourse(ui.enterId("course"));
+//                if (e1.getCourses().contains(c)) {
                 dbs.updateStudentPoints(s1.getPersonId(), c);
                 System.out.println("points uppdated\n");
+//                } else {
+//                    System.out.println("The course does not exist in available education");
+//                }
                 ui.enterToContinue();
                 break;
             case 4:

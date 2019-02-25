@@ -111,7 +111,7 @@ public class DAOEducationImpl implements DAOEducation {
             em.getTransaction().begin();
             Education e = em.find(Education.class, educationId);
 
-            Set<Course> setC = e.getCourses();
+            List<Course> setC = e.getCourses();
 
             for (Course course : setC) {
                 course.removeEducation(e);

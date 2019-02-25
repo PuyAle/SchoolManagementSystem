@@ -3,6 +3,7 @@
  */
 package Entity.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,8 +16,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,7 +26,7 @@ import javax.persistence.OneToMany;
     @NamedQuery(name = "getAllEducations", query = ("Select e From Education e"))
     ,
     @NamedQuery(name = "getEducationByName", query = ("Select e FROM Education e where e.name LIKE :name"))})
-public class Education {
+public class Education implements Serializable {
 
     @Id
     @Column(name = "education_id")
@@ -42,7 +41,7 @@ public class Education {
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 
-    private Set<Course> courses;
+    private List<Course> courses;
 
     @OneToMany(mappedBy = "education", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Set<Student> students;
@@ -100,14 +99,14 @@ public class Education {
         student.setEducation(null);
     }
 
-    public Set<Course> getCourses() {
+    public List<Course> getCourses() {
         if (courses == null) {
-            courses = new HashSet<>();
+            courses = new ArrayList<>();
         }
         return this.courses;
     }
 
-    public void setCourses(Set<Course> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 
