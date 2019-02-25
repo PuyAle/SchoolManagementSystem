@@ -5,4 +5,4 @@ The entities are used in the DAO package where the
 communication with the database is present.
 The layer for "business logic" is in the package UIDAOcom where the classes are handles communication between the dao and the ui.  
 
-The project was created in and finished in december 2018. 
+The project was made during december 2018. 
